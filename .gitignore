@@ -1,6 +1,7 @@
 target/
 .cache
 output/
+build/
 
 # Env
 .env*

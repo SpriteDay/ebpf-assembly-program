@@ -33,5 +33,11 @@ Install tooling for compilation:
 sudo apt install clang llvm libbpf-dev libelf-dev linux-tools-common linux-headers-generic
 ```
 
+## Build
+I set up basic `Makefile` for build:
+```sh
+make
+```
+
 ## Nice to have (VS Code extension)
 I made a custom `spriteday.ebpf-assembly` VS Code extension, it should be published at this point at [Open VSX](https://open-vsx.org/extension/spriteday/ebpf-assembly), but if it's unavailable you should be able to find installable release at https://github.com/SpriteDay/vscode-ebpf-assembly
