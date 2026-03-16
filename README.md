@@ -9,15 +9,20 @@ Doing things on lowest level helps me internalize how things are going on bare m
 Let's look at the first line:
 
 ```
-    .section socket_filter,"",@progbits
+    .section socket,"",@progbits
 ```
 
 What are these arguments:
-- `socket_filter` - eBPF programs can be attached at different points in the kernel and will be called like a function ([eBPF docs](https://docs.ebpf.io/linux/)). That's why we specify the type via "socket_filter". Program types: https://docs.ebpf.io/linux/program-type/. Linking of socket_filter to BPF_PROG_TYPE_SOCKET_FILTER: https://github.com/libbpf/libbpf/blob/master/src/libbpf.c#L199
+- `socket` - eBPF programs can be attached at different points in the kernel and will be called like a function ([eBPF docs](https://docs.ebpf.io/linux/)). That's why we specify the type via "socket". Program types: https://docs.ebpf.io/linux/program-type/. Linking of socket to `BPF_PROG_TYPE_SOCKET_FILTER`
 - `""` - The second argument currently set to "" is optional flags argument specified here: https://sourceware.org/binutils/docs/as/Section.html. In regular Linux programs it tells to a regular program loader how to set up memory (A - alloc, X - executable, W - writeable)
 - `@progbits` - The last element is section type, it is used to mark whether we have initialized data or not (`@progbits` for cases where we have actual program data in section). Reference: https://sourceware.org/binutils/docs/as/Section.html
 
-So we connected our small eBPF program to kernel events of sockets, and we filter every of them by setting `r0` to 0:
+```
+    .type start,@function
+```
+
+We need to declare type of start label, without marking it as function ELF will skip it: https://github.com/libbpf/libbpf/blob/master/src/libbpf.c#L920
+
 ```
     .global start
 
@@ -25,6 +30,14 @@ start:
     r0 = 0
     exit
 ```
+
+So we connect our eBPF program to kernel events of sockets, and we filter every of them by setting `r0` to 0:
+
+```
+    .size start, .-start
+```
+
+We declare the size of start function explicitly, because ELF will check it here: https://github.com/libbpf/libbpf/blob/master/src/libbpf.c#L923
 
 ## Prerequisites
 Basically we need:
@@ -42,6 +55,22 @@ sudo apt install clang llvm libbpf-dev libelf-dev linux-tools-common linux-heade
 I set up basic `Makefile` for build:
 ```sh
 make
+```
+
+## Running
+To attach the process under the name `myprog`:
+```sh
+sudo bpftool prog load build/main.o /sys/fs/bpf/myprog type socket
+```
+
+To see it in the list programs:
+```sh
+sudo bpftool prog list
+```
+
+To remove:
+```sh
+sudo rm /sys/fs/bpf/myprog
 ```
 
 ## Nice to have (VS Code extension)
