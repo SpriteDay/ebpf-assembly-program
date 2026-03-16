@@ -1,0 +1,7 @@
+target/
+.cache
+output/
+
+# Env
+.env*
+!.env.example
