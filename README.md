@@ -26,12 +26,17 @@ start:
     exit
 ```
 
-## Prerequisites (WSL2)
+## Prerequisites
+Basically we need:
+- `clang`
+- `llvm`
+- `bpftool`
 
-Install tooling for compilation:
+You can try this command that will install everything in a bulk:
 ```sh
 sudo apt install clang llvm libbpf-dev libelf-dev linux-tools-common linux-headers-generic
 ```
+
 
 ## Build
 I set up basic `Makefile` for build:
