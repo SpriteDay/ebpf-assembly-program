@@ -2,7 +2,8 @@
     // That's why we specify the type via "socket" 
     // Program types: https://docs.ebpf.io/linux/program-type/
     //
-    // The second argument currently set to "x" is optional flags argument specified here (we use x for executable): https://sourceware.org/binutils/docs/as/Section.html
+    // The second argument currently set to "x" is optional flags argument specified here (we use x for executable): 
+    // https://sourceware.org/binutils/docs/as/Section.html
     //
     // The last element set to @progbits is data type, is also specified here: https://sourceware.org/binutils/docs/as/Section.html
     .section socket,"x",@progbits

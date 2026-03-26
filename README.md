@@ -1,7 +1,7 @@
 ## About this project
-
-I wanted to go deep into how [eBPF](https://www.kernel.org/doc/html/v5.17/bpf/instruction-set.html) works to the bones.
-I need that because I want to make Solana Programs, and they run on fork of eBPF, [sBPF](https://github.com/anza-xyz/sbpf).
+I wanted to go deep into how eBPF works to the bones — both as a foundation for understanding userspace 
+[eBPF](https://www.kernel.org/doc/html/v5.17/bpf/instruction-set.html) runtimes like rbpf, and eventually 
+[sBPF](https://github.com/anza-xyz/sbpf) which Solana programs run on.
 
 Doing things on lowest level helps me internalize how things are going on bare metal, and I made this little project
 
